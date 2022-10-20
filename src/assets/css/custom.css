@@ -1,0 +1,229 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --app-bg: #fff;
+    --app-sidebar-bg: #fff;
+    --app-sidebar-active-item: #2C6ECB;
+    --app-sidebar-item: #A3AFCB;
+    --app-btn-color: #F13C04;
+    --app-success: #1FAD1C;
+    --app-secondary: #202223;
+    --app-primary: #7C8DB5;
+    --app-text:  #1B1F28;
+    --app-text-secondary: #94A0B8;
+    --app-font: 'Open Sans', sans-serif;
+    --app-sidebar-active-bg: #4B006E;
+    --app-color: #4B006E;
+    --app-title: 20px;
+    --app-title-2: 26px;
+    --app-name: 15px;
+    --app-select-bg: #F2F3F8;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: var(--app-font);
+}
+
+
+.sidebar-link-bg {
+    background-color: var(--app-sidebar-active-bg);
+}
+
+.app-color {
+    color: var(--app-color);
+}
+
+.app-text {
+    color: var(--app-text);
+}
+
+.app-text-secondary {
+    color: var(--app-text-secondary);
+}
+
+.app-btn {
+    background-color: var(--app-color);
+}
+
+.app-title {
+    font-size: var(--app-title);
+    font-weight: 700;
+}
+
+.app-title-2 {
+    font-size: var(--app-title-2);
+    font-weight: 700;
+}
+
+.app-select {
+    background-color: var(--app-select-bg);
+}
+
+.app-border {
+    border: 1px solid var(--app-color) !important;
+}
+
+.app-name {
+    font-size: var(--app-name);
+    font-weight: 600;
+}
+
+.dm-background {
+    background-image: url("../img/dm_background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+tr:nth-child(even) {
+    background-color: rgb(239, 239, 239);
+}
+
+
+/* Pagination CSS */
+.pagination-container a {
+    padding: 8px 15px;
+    color: black;
+    border: 1px solid gray;
+}
+
+.pagination-container li a {
+    padding: 9px 15px;
+    color: black;
+    border: 1px solid gray;
+}
+
+.pagination-container li a.active {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #7cbddb;
+}
+
+.pagination-container a.disabled {
+    opacity: 0.2;
+}
+
+.pagination-container a:hover:not(.active) {
+    background-color: rgb(238, 238, 238);
+    color: black;
+}
+
+
+
+/* Table Customization */
+
+.table-responsive {
+    width: 100% !important;
+    height: 500px !important;
+}
+
+.MuiDataGrid-main {
+    display: flex !important;
+    justify-content: flex-start !important;
+
+}
+
+.MuiDataGrid-root {
+    border: none !important;
+    /* width: 100% !important; */
+}
+
+.MuiDataGrid-footer {
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+.MuiDataGrid-columnHeaders {
+    background-color: rgba(80, 79, 79, 0.29) !important;
+    border-bottom: none !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    /* width: 100% !important; */
+}
+
+.MuiDataGrid-columnHeadersInner {
+    font-weight: bolder !important;
+    font-size: 16px !important;
+}
+
+.MuiDataGrid-columnHeaderRow {
+    background-color: red !important;
+}
+
+.MuiDataGrid-cell--withRenderer,
+.MuiDataGrid-cell,
+.MuiDataGrid-cell--textLeft {
+    justify-content: center !important;
+    text-align: right !important;
+}
+
+
+.MuiDataGrid-cell--withRenderer {
+    width: 10px !important;
+}
+
+.MuiDataGrid-root .MuiDataGrid-columnSeparator,
+.MuiDataGrid-iconButtonContainer {
+    display: none !important;
+}
+
+.MuiDataGrid-cell {
+    border-bottom: none !important;
+}
+
+/* the table check input */
+.MuiCheckbox-root {
+    color: var(--app-sidebar-active-item) !important;
+}
+
+.Mui-checked {
+    color: var(--app-btn-color) !important;
+}
+
+/* table pagination next and prev */
+
+.MuiTablePagination-actions button {
+    background-color: var(--app-sidebar-active-item) !important;
+    margin-right: 4px !important;
+    color: var(--app-sidebar-bg) !important;
+
+}
+
+
+.MuiTablePagination-actions button:nth-last-child(2) {
+    background-color: #81818160 !important;
+    color: var(--app-sidebar-bg) !important;
+}
+
+
+.MuiButtonBase-root-MuiCheckbox-root {
+    color: var(--app-sidebar-active-item) !important;
+}
+
+/* the table sort, menu and separator icon  */
+.MuiDataGrid-sortIcon,
+.MuiDataGrid-menuIcon,
+.columnSeparator--sideRight,
+.columnSeparator--sideLeft {
+    display: none !important;
+}
+
+/* data index row background color */
+.dmf-table {
+    background-color: white !important;
+}
+
+.dmf-table-next {
+    background-color: rgba(255, 255, 255, 0.762) !important;
+}
+
+
+.MuiDataGrid-panelFooter {
+    margin: 0px 20px !important;
+    padding: 0px 20px !important;
+}
