@@ -1,7 +1,7 @@
 
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AccountActivation, AccountActivationCompleted, AccountVerification, ArtistArtworks, ArtworkDetails, Collections, CreateAccount, DashboardOverview, Favourite, FundWallet, Login,  PortfolioPage, TrendPage, UserDocuments, UserInvestmentHistory, UserNotification, UserPaymentMethod, UserProfile, WalletPage } from "./pages";
+import { AccountActivation, AccountActivationCompleted, AccountVerification, ArtistArtworks, ArtSecForgotPassword, ArtworkDetails, Collections, CreateAccount, DashboardOverview, Favourite, FundWallet, Login,  PortfolioPage, TrendPage, UserDocuments, UserInvestmentHistory, UserNotification, UserPaymentMethod, UserProfile, WalletPage } from "./pages";
 
 
 
@@ -19,6 +19,7 @@ function App() {
           <Route path='/account-activation' element={<AccountActivation />} />
           <Route path='/fund-wallet' element={<FundWallet />} />
           <Route path='/account-activation-completed' element={<AccountActivationCompleted />} />
+          <Route path='/forgot-password' element={<ArtSecForgotPassword />} />
 
 
           <Route path='/dashboard' element={<DashboardOverview />} />
