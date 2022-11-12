@@ -6,6 +6,8 @@ import { UserImg } from '../../../assets/import';
 import { useStateContext } from '../../../contexts/ContextProvider';
 import { user_profile } from '../../../data/MenuItem';
 import { Link, NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../redux/auth.slice';
 
 
 const NavButton = ({ customFunc, icon, color, dotColor }) => (
@@ -48,6 +50,8 @@ const Navbar = () => {
       setActiveMenu(true);
     }
   }, [screenSize]);
+
+  const dispatch = useDispatch();
 
 
   return (
@@ -102,10 +106,10 @@ const Navbar = () => {
                     ))}
 
                     {/* logout action button */}
-                    <Link to="/" className='flex items-center space-x-2 pt-2'>
+                    <div onClick={() => dispatch(logout())}>
                       <span className='text-base block float-left text-purple-900'><icons.LogoutIcon /></span>
                       <span className={`text-sm font-medium duration-300 text-red-600`}>Logout</span>
-                    </Link>
+                    </div>
                   </ul>
                 </div>
               </div>

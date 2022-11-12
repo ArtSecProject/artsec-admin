@@ -1,26 +1,54 @@
 
+import { useFormik } from 'formik';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import { LOGIN_SCHEMA } from '../../../config/schema';
+import { fetchAuthUser } from '../../../redux/auth.slice';
 import { Div } from '../../../style-component';
 import SocialLoginSignup from './Social-Login-Signup';
 
 
 
 const LoginForm = () => {
+    let navigate = useNavigate();
+    const dispatch = useDispatch();
 
+    const { error, user, loading } = useSelector(state => state.auth);
     const [passwordShown, setPasswordShown] = useState(false);
 
     const togglePassword = () => {
         setPasswordShown(!passwordShown);
     };
 
-    const onSubmit = (e) => {
-        e.preventDefault();
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: ''
+        },
+        validationSchema: LOGIN_SCHEMA,
+        onSubmit: async (values) => {
+            try {
 
-        const data = new FormData(e.target);
-        const result = Object.fromEntries(data.entries());
-        console.log(result);
-    }
+                await dispatch(fetchAuthUser(values)).unwrap();
+
+                navigate('/dashboard')
+            } catch (err) {
+                console.log(err);
+                toast.error(err.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+        }
+    })
+
 
     return (
         <div className='space-y-6'>
@@ -28,7 +56,7 @@ const LoginForm = () => {
                 <h2 className='app-color text-xl sm:text-xl md:text-xl lg:text-3xl font-bold'>Sign In to your Account</h2>
                 <p className='text-[#1B1F28] text-[18px] font-semibold'>Sign In with Email</p>
             </div>
-            <form className="space-y-2" onSubmit={onSubmit} autoComplete="off" >
+            <form className="space-y-2" onSubmit={formik.handleSubmit} autoComplete="off" >
                 <div className='mb-3'>
                     <Div.Label>
                         Email Address
@@ -36,7 +64,11 @@ const LoginForm = () => {
                             type="text"
                             name="email"
                             placeholder="email address"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                         />
+                        {formik.touched.email && formik.errors.email && <span className='text-sm text-[red]'>{formik.errors.email}</span>}
                     </Div.Label>
                 </div>
                 <Div.Label>
@@ -46,9 +78,13 @@ const LoginForm = () => {
                             type={passwordShown ? "text" : "password"}
                             name="password"
                             placeholder="password"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                         />
                         <i className={(passwordShown ? 'bx-show' : 'bx-hide') + ' bx absolute right-12 pt-1  text-2xl text-[#606C84]'} onClick={togglePassword}></i>
                     </div>
+                    {formik.touched.password && formik.errors.password && <span className='text-sm text-[red]'>{formik.errors.password}</span>}
                 </Div.Label>
 
 
@@ -57,16 +93,17 @@ const LoginForm = () => {
 
                 {/* login button */}
                 <div className='pt-5'>
-                    <Link to="">
-                        <Div.Button
-                            type="submit"
-                            desc="Sign In"
-                            width="w-full"
-                            bgColor="bg-purple-900"
-                            padding="p-3"
-                            color="text-white"
-                        />
-                    </Link>
+
+                    <Div.Button
+                        type="submit"
+                        desc={loading ? 'Loading ....' : 'Sign In'}
+                        width="w-full"
+                        bgColor="bg-purple-900"
+                        padding="p-3"
+                        color="text-white"
+                        disabled={loading ? true : false}
+                    />
+
                 </div>
 
                 {/* forgot detail */}
@@ -81,9 +118,10 @@ const LoginForm = () => {
                 </div>
 
                 <p className='text-[#1B1F28] text-[18px] font-semibold text-center'>Sign In with Socials</p>
-                    <SocialLoginSignup />
+                <SocialLoginSignup />
 
             </form>
+            {error && <ToastContainer />}
         </div>
     )
 }
