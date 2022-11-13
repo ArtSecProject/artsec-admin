@@ -43,8 +43,8 @@ export const authSlice = createSlice({
         [fetchAuthUser.fulfilled]: (state, action) => {
             state.loading = false;
             state.user = action.payload.data.user;
-            state.access_token = CryptoJS.AES.encrypt(action.payload.data.access_token, process.env.REACT_APP_KEY).toString();
-            Cookies.set('access_token', state.access_token);
+            state.access_token = action.payload.data.access_token;
+            Cookies.set('access_token', CryptoJS.AES.encrypt(state.access_token, process.env.REACT_APP_KEY).toString());
             localStorage.setItem('user', JSON.stringify(state.user));
         },
         [fetchAuthUser.rejected]: (state, action) => {
