@@ -4,8 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AccountActivation, AccountActivationCompleted, AccountVerification, ArtistArtworks, ArtSecForgotPassword, ArtworkDetails, Collections, CreateAccount, DashboardOverview, Favourite, FundWallet, Login,  PortfolioPage, TrendPage, UserDocuments, UserInvestmentHistory, UserNotification, UserPaymentMethod, UserProfile, WalletPage } from "./pages";
 
 
-
-
 function App() {
   return (
     <div>
