@@ -93,7 +93,7 @@ const Navbar = () => {
                   <ul>
                     {user_profile.map((item, index) => (
                       <>
-                        <li key={index.id} className={`w-full cursor-pointer hover:bg-transparent  ${item.spacing ? "mt-9" : "mt-2 "}`}>
+                        <li key={index} className={`w-full cursor-pointer hover:bg-transparent  ${item.spacing ? "mt-9" : "mt-2 "}`}>
                           <NavLink
                             to={`/dashboard/${item.path}`}
                             className="flex items-center space-x-2"

@@ -1,8 +1,13 @@
 
 
 
+import { useFormik } from 'formik';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import { publicEnpoints } from '../../../config/api.request';
+import { REG_SCHEMA } from '../../../config/schema';
 import { Div } from '../../../style-component';
 import SocialLoginSignup from './Social-Login-Signup';
 
@@ -10,12 +15,47 @@ import SocialLoginSignup from './Social-Login-Signup';
 
 const SignUp = () => {
 
+    let navigate = useNavigate();
+
 
     const [passwordShown, setPasswordShown] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const togglePassword = () => {
         setPasswordShown(!passwordShown);
     };
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+            firstname: '',
+            lastname: '',
+            password_confirmation: '',
+        },
+        validationSchema: REG_SCHEMA,
+        onSubmit: async (values) => {
+            setLoading(true);
+            const data = await publicEnpoints.regUser(values);
+
+            if (data.err) {
+                toast.error(data.err.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                setLoading(false);
+            } else {
+                setLoading(false);
+                localStorage.setItem('email', values.email);
+                navigate('/account-verification');
+            }
+
+        }
+    })
 
     return (
         <div className='space-y-2'>
@@ -23,7 +63,7 @@ const SignUp = () => {
                 <h2 className='app-color text-xl sm:text-xl md:text-xl lg:text-3xl font-bold'>Create your account</h2>
                 <p className='text-[#1B1F28] text-[18px] font-semibold'>Sign up with Email</p>
             </div>
-            <form className="space-y-2">
+            <form className="space-y-2" onSubmit={formik.handleSubmit} >
                 <div className='mb-2'>
                     <Div.Label>
                         <span className="text-[#606c84]">Email Address</span>
@@ -31,7 +71,11 @@ const SignUp = () => {
                             type="text"
                             name="email"
                             placeholder="email address"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                         />
+                        {formik.touched.email && formik.errors.email && <span className='text-sm text-[red]'>{formik.errors.email}</span>}
                     </Div.Label>
                 </div>
 
@@ -41,9 +85,13 @@ const SignUp = () => {
                             <span className="text-[#606c84]">First Name</span>
                             <Div.Input
                                 type="text"
-                                name="first_name"
+                                name="firstname"
                                 placeholder="Godwin"
+                                value={formik.values.firstname}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                             />
+                            {formik.touched.firstname && formik.errors.firstname && <span className='text-sm text-[red]'>{formik.errors.firstname}</span>}
                         </Div.Label>
                     </div>
                     <div>
@@ -51,9 +99,13 @@ const SignUp = () => {
                             <span className="text-[#606c84]">Last Name</span>
                             <Div.Input
                                 type="text"
-                                name="last_name"
+                                name="lastname"
                                 placeholder="Ahua"
+                                value={formik.values.lastname}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                             />
+                            {formik.touched.lastname && formik.errors.lastname && <span className='text-sm text-[red]'>{formik.errors.lastname}</span>}
                         </Div.Label>
                     </div>
                 </div>
@@ -64,8 +116,27 @@ const SignUp = () => {
                             type={passwordShown ? "text" : "password"}
                             name="password"
                             placeholder="password"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                         />
                         <i className={(passwordShown ? 'bx-show' : 'bx-hide') + ' bx absolute right-12 pt-1  text-2xl text-[#606C84]'} onClick={togglePassword}></i>
+                        {formik.touched.password && formik.errors.password && <span className='text-sm text-[red]'>{formik.errors.password}</span>}
+                    </div>
+                </Div.Label>
+                <Div.Label>
+                    <span className="text-[#606c84]">Confirm Password (minimum of 8 characters)</span>
+                    <div className='flex'>
+                        <Div.Input
+                            type={passwordShown ? "text" : "password"}
+                            name="password_confirmation"
+                            placeholder="password"
+                            value={formik.values.password_confirmation}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                        />
+                        <i className={(passwordShown ? 'bx-show' : 'bx-hide') + ' bx absolute right-12 pt-1  text-2xl text-[#606C84]'} onClick={togglePassword}></i>
+                        {formik.touched.password_confirmation && formik.errors.password_confirmation && <span className='text-sm text-[red]'>{formik.errors.password_confirmation}</span>}
                     </div>
                 </Div.Label>
 
@@ -83,15 +154,17 @@ const SignUp = () => {
 
                 {/* login button */}
                 <div className='pt-5'>
-                    <Link to="/account-verification">
-                        <Div.Button
-                            desc="Create Account"
-                            width="w-full"
-                            bgColor="app-btn"
-                            padding="p-3"
-                            color="text-white"
-                        />
-                    </Link>
+
+                    <Div.Button
+                        desc={loading ? 'Loading ....' : 'Create Account'}
+                        width="w-full"
+                        bgColor="bg-purple-900"
+                        padding="p-3"
+                        color="text-white"
+                        type="submit"
+                        disabled={loading ? true : false}
+                    />
+
                 </div>
 
                 {/* forgot detail */}
@@ -107,6 +180,7 @@ const SignUp = () => {
                 <p className='text-[#1B1F28] text-[18px] font-semibold text-center'>Sign In with Socials</p>
                 <SocialLoginSignup />
             </form>
+            <ToastContainer />
         </div>
     )
 }

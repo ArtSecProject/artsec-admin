@@ -71,7 +71,7 @@ const Sidebar = ({ children }) => {
                         <ul className='pt-2'>
                             {MenuItem.map((item, index) => (
                                 <>
-                                    <li key={index.id} className={`w-full text-[#4B006E] text-sm flex items-center gap-x-28 cursor-pointer hover:bg-transparent  ${item.spacing ? "mt-9" : "mt-2 "}`}>
+                                    <li key={index} className={`w-full text-[#4B006E] text-sm flex items-center gap-x-28 cursor-pointer hover:bg-transparent  ${item.spacing ? "mt-9" : "mt-2 "}`}>
                                         <NavLink
                                             to={`/dashboard/${item.path}`}
                                             className={({ isActive }) => isActive ? activeLink : normalLink}

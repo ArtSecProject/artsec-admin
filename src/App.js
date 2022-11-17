@@ -1,4 +1,5 @@
 
+
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { AccountActivation, AccountActivationCompleted, AccountVerification, ArtistArtworks, ArtSecForgotPassword, ArtworkDetails, Collections, CreateAccount, DashboardOverview, Favourite, FundWallet, Login, PortfolioPage, TrendPage, UserDocuments, UserInvestmentHistory, UserNotification, UserPaymentMethod, UserProfile, WalletPage } from "./pages";
@@ -6,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import jwt_decode from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "./redux/auth.slice";
-import CryptoJS from "crypto-js";
+import { ToastContainer } from "react-toastify";
 
 
 const RouteGuard = ({ access_token, redirectPath = '/' }) => {
@@ -15,9 +16,6 @@ const RouteGuard = ({ access_token, redirectPath = '/' }) => {
   if (!access_token) {
     return <Navigate to={redirectPath} replace />;
   }
-
-
-
   const decoded_token = jwt_decode(access_token);
 
   console.log(decoded_token);
@@ -41,9 +39,9 @@ function App() {
           {/* auth */}
           <Route path='/' element={<Login />} />
           <Route path='/create-account' element={<CreateAccount />} />
+          <Route path='/account-verification' element={<AccountVerification />} />
+          <Route path='/account-activation' element={<AccountActivation />} />
           <Route element={<RouteGuard access_token={access_token} />}>
-            <Route path='/account-verification' element={<AccountVerification />} />
-            <Route path='/account-activation' element={<AccountActivation />} />
             <Route path='/fund-wallet' element={<FundWallet />} />
             <Route path='/account-activation-completed' element={<AccountActivationCompleted />} />
             <Route path='/forgot-password' element={<ArtSecForgotPassword />} />
@@ -71,6 +69,7 @@ function App() {
 
         </Routes>
       </Router>
+      <ToastContainer/>
     </div>
   );
 }
