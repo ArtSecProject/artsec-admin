@@ -41,10 +41,10 @@ function App() {
           <Route path='/create-account' element={<CreateAccount />} />
           <Route path='/account-verification' element={<AccountVerification />} />
           <Route path='/account-activation' element={<AccountActivation />} />
+          <Route path='/forgot-password' element={<ArtSecForgotPassword />} />
           <Route element={<RouteGuard access_token={access_token} />}>
             <Route path='/fund-wallet' element={<FundWallet />} />
             <Route path='/account-activation-completed' element={<AccountActivationCompleted />} />
-            <Route path='/forgot-password' element={<ArtSecForgotPassword />} />
 
 
             <Route path='/dashboard' element={<DashboardOverview />} />
@@ -69,7 +69,7 @@ function App() {
 
         </Routes>
       </Router>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }

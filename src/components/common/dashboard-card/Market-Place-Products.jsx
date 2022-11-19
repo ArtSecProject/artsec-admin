@@ -1,20 +1,30 @@
 
 
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MartketButton } from ".";
-import { privateEndpoints } from "../../../config/api.request";
 import { marketPlace } from "../../../data/market-place";
 
 
 const MarketPlaceProduct = () => {
+    const { access_token } = useSelector(state => state.auth);
     const [products, setProducts] = useState([]);
     useEffect(() => {
         (async () => {
-            const data = await privateEndpoints.getProducts();
-            if (data.err) {
-                toast.error(data.err.message, {
+
+            try {
+                const config = {
+                    headers: {
+                        "Authorization": `Bearer ${access_token}}`, "Content-type": "application/json"
+                    },
+                };
+                const { data } = await axios.get('https://artsec-service-cjfd8.ondigitalocean.app/api/v1/get_products', config);
+                setProducts(data.data)
+            } catch (err) {
+                toast.error(err.message, {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -23,11 +33,10 @@ const MarketPlaceProduct = () => {
                     draggable: true,
                     progress: undefined,
                 });
-            } else {
-                setProducts(data.data.data)
             }
+
         })();
-    }, [])
+    }, [access_token])
 
     console.log(products);
 

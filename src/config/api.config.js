@@ -2,7 +2,9 @@ import axios from "axios";
 import CryptoJS from 'crypto-js'
 import Cookies from 'js-cookie';
 
-const encrypted_token  = Cookies.get('access_token') && CryptoJS.AES.decrypt(Cookies.get('access_token') , process.env.REACT_APP_KEY);
+
+
+const encrypted_token = Cookies.get('access_token') && CryptoJS.AES.decrypt(Cookies.get('access_token'), process.env.REACT_APP_KEY);
 const TOKEN = encrypted_token && encrypted_token.toString(CryptoJS.enc.Utf8);
 const BASE_URL = 'https://artsec-service-cjfd8.ondigitalocean.app/api';
 
@@ -20,3 +22,5 @@ export const userRequest = axios.create({
         "Authorization": `Bearer ${TOKEN}`, "Content-type": "application/json"
     },
 });
+
+
