@@ -36,9 +36,9 @@ function App() {
       <Router>
         <Routes>
 
-          {/* auth */}
-          <Route path='/' element={<Login />} />
-          <Route path='/create-account' element={<CreateAccount />} />
+          {/* auth */}ß
+          <Route path='/' element={access_token !== '' ? <Navigate replace to="/dashboard" /> : <Login />} />
+          <Route path='/create-account'  element={access_token !== '' ? <Navigate replace to="/dashboard" /> : <CreateAccount />}  />
           <Route path='/account-verification' element={<AccountVerification />} />
           <Route path='/account-activation' element={<AccountActivation />} />
           <Route path='/forgot-password' element={<ArtSecForgotPassword />} />
