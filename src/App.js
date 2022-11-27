@@ -36,7 +36,7 @@ function App() {
       <Router>
         <Routes>
 
-          {/* auth */}ß
+          {/* auth */}
           <Route path='/' element={access_token !== '' ? <Navigate replace to="/dashboard" /> : <Login />} />
           <Route path='/create-account'  element={access_token !== '' ? <Navigate replace to="/dashboard" /> : <CreateAccount />}  />
           <Route path='/account-verification' element={<AccountVerification />} />
