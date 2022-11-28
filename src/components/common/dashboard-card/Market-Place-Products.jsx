@@ -49,7 +49,7 @@ const MarketPlaceProduct = () => {
                         <div className="p-2">
                             <div className="flex justify-between items-center">
                                 <div>
-                                    <p className='text-[18px] font-semibold'>{item?.title}</p>
+                                    <p className='text-[18px] font-semibold'>{item.name}</p>
                                     <p className='text-[15px] font-normal text-[#1B1F28]'>{item?.product_by}</p>
                                 </div>
                                 <MartketButton
@@ -60,25 +60,25 @@ const MarketPlaceProduct = () => {
                             </div>
                             <div className="flex justify-between items-center py-2">
                                 <div>
-                                    <p className='text-[15px] font-normal text-[#606C84]'>{item?.sales}</p>
+                                    <p className='text-[15px] font-normal text-[#606C84]'>Sale Price</p>
                                     <p className='text-[18px] font-semibold'>$ {item.sale_price}</p>
                                 </div>
                                 <div>
-                                    <p className='text-[15px] font-normal text-[#606C84]'>{item?.purchase}</p>
+                                    <p className='text-[15px] font-normal text-[#606C84]'>Purchase Price</p>
                                     <p className='text-[18px] font-semibold'>$ {item.purchase_price}</p>
                                 </div>
                             </div>
 
                             <div className="flex justify-between items-center py-2">
-                                <Link to="/dashboard/artwork-details">
+                                <Link to={"/dashboard/artwork-details/" + item.id}>
                                     <MartketButton
                                         className="flex justify-between items-center px-8 py-2 border border-[#4B006E] rounded-md cursor-pointer app-color hover:bg-[#4b006e] hover:text-white"
-                                        title={<icons.ArtSecPlaceBid className='mr-2' />}
-                                        icon={<icons.ArtSecFavourite />}
+                                        title='Place a Bid'
+                                        icon={<icons.ArtSecPlaceBid className='mr-2' />}
                                     />
                                 </Link>
                                 <div>
-                                    {item.favourite}
+                                    {<icons.ArtSecFavourite />}
                                 </div>
                             </div>
                         </div>

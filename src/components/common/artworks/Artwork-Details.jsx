@@ -1,14 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TrendChart } from '../charts';
 import { MarketItem1 } from "../../../assets/import";
 import { icons } from "../../../constant/icon";
 import { ArtSecSelectInput, ArtWorkDeatilsInfo } from "../../common"
 import { data, social } from '../../../data/artwork-details-data';
+import { useParams } from 'react-router-dom';
+import { userRequest } from '../../../config/api.config';
 
 
 
 
 const ArtworkDetails = () => {
+
+  const { id } = useParams();
+  const [product, setProduct] = useState();
+
+  console.log(id);
+
+  useEffect(() => {
+
+    const getProduct = async () => {
+      try {
+        const { data } = await userRequest.post('/get_by_id_product', { id: id });
+
+        setProduct(data.data);
+      } catch (err) {
+
+      }
+    }
+
+    getProduct();
+
+
+  }, [id])
+
+  console.log(product);
+
   return (
     <>
       <div className='block sm:block md:block lg:flex justify-center space-x-1 lg:space-x-4 py-4 px-2 lg:px-1'>
@@ -36,7 +63,7 @@ const ArtworkDetails = () => {
           <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-3 pb-2'>
             {data.map((item, index) => (
               <div key={index.id} className='border border-gray-300 p-3 rounded-lg'>
-                <p className='text-[15px] font-normal'>{item.title}</p>
+                <p className='text-[15px] font-normal'>{item.name}</p>
                 <h2 className="text-2xl font-bold text-[#1B1F28]">$ {item.rate}</h2>
               </div>
             ))}
@@ -55,9 +82,9 @@ const ArtworkDetails = () => {
         </div>
       </div>
 
-    {/* // section 2 */}
-            
-      <ArtWorkDeatilsInfo />
+      {/* // section 2 */}
+
+      <ArtWorkDeatilsInfo details={product} />
 
     </>
 

@@ -53,7 +53,7 @@ function App() {
             <Route path='/dashboard/favourite' element={<Favourite />} />
             <Route path='/dashboard/porfolio' element={<PortfolioPage />} />
             <Route path='/dashboard/wallet' element={<WalletPage />} />
-            <Route path='/dashboard/artwork-details' element={<ArtworkDetails />} />
+            <Route path='/dashboard/artwork-details/:id' element={<ArtworkDetails />} />
             <Route path='/dashboard/artist-artworks' element={<ArtistArtworks />} />
             <Route path='/dashboard/collection-details' element={<Collections />} />
 

@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 
 const encrypted_token = Cookies.get('access_token') && CryptoJS.AES.decrypt(Cookies.get('access_token'), process.env.REACT_APP_KEY);
 const TOKEN = encrypted_token && encrypted_token.toString(CryptoJS.enc.Utf8);
-const BASE_URL = 'https://artsec-service-cjfd8.ondigitalocean.app/api';
+const BASE_URL = 'https://artsec-service-cjfd8.ondigitalocean.app/api/v1';
 
 
 export const publicRequest = axios.create({
