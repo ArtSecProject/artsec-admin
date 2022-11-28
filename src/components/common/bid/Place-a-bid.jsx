@@ -91,7 +91,7 @@ const PlaceABid = () => {
           </div>
         </div>
 
-         {/* this modal should display on button success submit */}
+        {/* this modal should display on button success submit */}
         {/* <BidSuccess label={`Your bid has been submitted..`} /> */}
       </>
     </ArtSecModal>
