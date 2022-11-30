@@ -8,14 +8,69 @@ import ArtSecModal from "../modal/Modal";
 import ArtSectAmtInput from "../select-input/Amount-Input";
 import ArtSecCheckBox from "../select-input/CheckBox";
 import { icons } from '../../../constant/icon';
+import { useSelector } from 'react-redux';
+import { userRequest } from '../../../config/api.config';
+import { toast } from 'react-toastify';
 // import BidSuccess from './Bid-Success';
 
-const PlaceABid = () => {
+const PlaceABid = ({ product }) => {
 
   const [date, setDate] = useState(new Date());
+  const { user } = useSelector(state => state.auth);
+  const [isLoading, setIsLoading] = useState(false);
+  const [amount, setAmount] = useState("");
   useEffect(() => {
     setInterval(() => setDate(new Date()), 30000);
   }, []);
+
+
+
+
+  const placeBid = async () => {
+    setIsLoading(true);
+
+    if (amount === '') {
+      toast.warn('Amount field is required', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
+    const payload = {
+      product_id: product.id.toString(),
+      user_id: user.id.toString(),
+      share: product.available_shares,
+      expiry_date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDay() + 1}`,
+      status: "BID",
+      amount: amount
+    }
+
+    console.log(payload);
+
+    try {
+      const { data } = await userRequest.post('/v1/add_bid', payload);
+      setIsLoading(false);
+      console.log(data);
+    } catch (err) {
+      toast.error(err.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setIsLoading(false);
+    }
+
+  }
 
   return (
     <ArtSecModal width='w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2' title="Place a Bid">
@@ -56,6 +111,7 @@ const PlaceABid = () => {
                 type="text"
                 name="amount"
                 placeholder="0.00"
+                onChange={(e) => setAmount(e.target.value)}
               />
               <p className='flex justify-end items-end text-[18px] font-normal app-text py-2'>$ 760.03 Wallet Balance</p>
             </div>
@@ -80,13 +136,15 @@ const PlaceABid = () => {
               </div>
               <ArtSecCheckBox type="checkbox" label="Includes Insurance" />
             </div>
+            <div onClick={placeBid}>
+              <DashboardButton
+                icon={<icons.ArtSecPlaceBid className="mr-3" />}
+                title="Submit Bit"
+                type="submit"
+                className="app-btn flex justify-center items-center text-center space-x-2 text-white cursor-pointer p-3 rounded-md mt-10"
+              />
+            </div>
 
-            <DashboardButton
-              icon={<icons.ArtSecPlaceBid className="mr-3" />}
-              title="Submit Bit"
-              type="submit"
-              className="app-btn flex justify-center items-center text-center space-x-2 text-white cursor-pointer p-3 rounded-md mt-10"
-            />
 
           </div>
         </div>

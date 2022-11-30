@@ -18,6 +18,8 @@ const ArtworkDetailsInfo = ({ details }) => {
         setInterval(() => setDate(new Date()), 30000);
     }, []);
 
+
+
     return (
         <>
             {details && <div className='block sm:block md:block lg:flex space-x-1 lg:space-x-4 px-2 lg:px-1'>
@@ -124,7 +126,7 @@ const ArtworkDetailsInfo = ({ details }) => {
                 </div>
             </div>}
 
-            {isClicked.place_bid && <PlaceBid />}
+            {isClicked.place_bid && <PlaceBid product={details} />}
             {isClicked.buy_in_split && <BuyInSplit />}
             {isClicked.hold_bid && <HoldBid />}
         </>

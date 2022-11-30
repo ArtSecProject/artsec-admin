@@ -21,7 +21,7 @@ const ArtworkDetails = () => {
 
     const getProduct = async () => {
       try {
-        const { data } = await userRequest.post('/get_by_id_product', { id: id });
+        const { data } = await userRequest.post('/v1/get_by_id_product', { id: id });
 
         setProduct(data.data);
       } catch (err) {
@@ -34,7 +34,7 @@ const ArtworkDetails = () => {
 
   }, [id])
 
-  console.log(product);
+
 
   return (
     <>
