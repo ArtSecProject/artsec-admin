@@ -48,6 +48,7 @@ import {
   Generic,
   PaymentFailed,
   AccountActivationCompleted,
+  DataLoader,
 } from "../components/common/dmf-icon";
 
 // REACT ICON LIBRARY
@@ -155,5 +156,6 @@ export const icons = {
   DocumentIcon,
   NotifyIcon,
   LogoutIcon,
-  ArtSecFileUpload
+  ArtSecFileUpload,
+  DataLoader,
 };

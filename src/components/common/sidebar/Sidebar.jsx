@@ -29,7 +29,7 @@ const Sidebar = ({ children }) => {
 
                     {/* logo */}
                     <div className='flex justify-center space-x-3 md:justify-center items-center pb-5'>
-                        <center onClick={handleCloseSidebar}> <Link to="/dashboard/overview"><icons.ArtSecLogo /></Link></center>
+                        <center onClick={handleCloseSidebar}> <a href="//squid-app-e4g6h.ondigitalocean.app"><icons.ArtSecLogo /></a></center>
 
                         {/* sidebar close and open button */}
 

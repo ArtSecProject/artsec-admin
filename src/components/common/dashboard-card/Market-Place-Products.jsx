@@ -6,15 +6,17 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MartketButton } from ".";
+import { DataLoader } from "..";
 import { icons } from "../../../constant/icon";
 
 
 const MarketPlaceProduct = () => {
     const { access_token } = useSelector(state => state.auth);
+    const [isLoading, setIsLoading ] = useState(false);
     const [products, setProducts] = useState([]);
     useEffect(() => {
         (async () => {
-
+            setIsLoading(true);
             try {
                 const config = {
                     headers: {
@@ -22,8 +24,10 @@ const MarketPlaceProduct = () => {
                     },
                 };
                 const { data } = await axios.get('https://artsec-service-cjfd8.ondigitalocean.app/api/v1/get_products', config);
+                setIsLoading(false);
                 setProducts(data.data.data)
             } catch (err) {
+                setIsLoading(false);
                 toast.error(err.message, {
                     position: "top-right",
                     autoClose: 5000,
@@ -42,7 +46,9 @@ const MarketPlaceProduct = () => {
 
     return (
         <>
-            {
+           {isLoading ? <DataLoader />: 
+            <>
+                 {
                 products.map((item, index) => (
                     <div key={index} className="bg-white shadow">
                         <img src={'https://artsec-service-cjfd8.ondigitalocean.app/api/v1/get_path?img_path=' + item.img} alt="" className="w-full h-48" />
@@ -85,6 +91,8 @@ const MarketPlaceProduct = () => {
                     </div>
                 ))
             }
+            </>
+           }
         </>
     )
 }
