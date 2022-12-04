@@ -1,4 +1,5 @@
 
+import axios from 'axios';
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,7 +33,6 @@ const LoginForm = () => {
             try {
 
                 await dispatch(fetchAuthUser(values)).unwrap();
-
                 navigate('/dashboard')
             } catch (err) {
                 console.log(err);

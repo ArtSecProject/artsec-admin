@@ -10,7 +10,7 @@ import { icons } from "../../../constant/icon";
 
 
 const MarketPlaceProduct = () => {
-    const { access_token } = useSelector(state => state.auth);
+    const { access_token, user } = useSelector(state => state.auth);
     const [products, setProducts] = useState([]);
     useEffect(() => {
         (async () => {
@@ -37,6 +37,32 @@ const MarketPlaceProduct = () => {
 
         })();
     }, [access_token])
+
+    useEffect(() => {
+        (async () => {
+
+            try {
+                const config = {
+                    headers: {
+                        "Authorization": `Bearer ${access_token}}`, "Content-type": "application/json"
+                    },
+                };
+                const { data } = await axios.post('https://artsec-service-cjfd8.ondigitalocean.app/api/v1/get_wallet_balance', { user_id: user.id.toString() }, config);
+                console.log(data);
+            } catch (err) {
+                toast.error(err.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+
+        })();
+    }, [access_token, user.id])
 
     console.log(products);
 
