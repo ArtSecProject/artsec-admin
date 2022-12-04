@@ -24,4 +24,6 @@ export * from "./account";
 // authentication
 export * from "./auth";
 
+export { default as DataLoader } from "./loader/Loader";
+
 

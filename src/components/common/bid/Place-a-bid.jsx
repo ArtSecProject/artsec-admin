@@ -146,6 +146,7 @@ const PlaceABid = ({ product }) => {
             </div>
 
 
+
           </div>
         </div>
 
