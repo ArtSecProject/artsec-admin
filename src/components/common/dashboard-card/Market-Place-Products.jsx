@@ -23,7 +23,6 @@ const MarketPlaceProduct = () => {
 
         (async () => {
 
-
             try {
                 const config = {
                     headers: {
