@@ -52,7 +52,7 @@ const MarketPlaceProduct = () => {
                     {
                         products.map((item, index) => (
                             <div key={index} className="bg-white shadow">
-                                <img src={'https://artsec-service-cjfd8.ondigitalocean.app/api/v1/get_path?img_path=' + item.img} alt="" className="w-full h-48" />
+                                <img src="" alt="" className="w-full h-48" />
                                 <div className="p-2">
                                     <div className="flex justify-between items-center">
                                         <div>
