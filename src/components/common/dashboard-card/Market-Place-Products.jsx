@@ -30,7 +30,7 @@ const MarketPlaceProduct = () => {
                         "Authorization": `Bearer ${access_token}}`, "Content-type": "application/json"
                     },
                 };
-                const { data } = await axios.get('https://artsec-service-cjfd8.ondigitalocean.app/api/v1/get_products', config);
+                const { data } = await axios.get(`${process.env.REACT_APP_URL}/get_products`, config);
                 setProducts(data.data.data);
 
             } catch (err) {
@@ -42,31 +42,6 @@ const MarketPlaceProduct = () => {
         })();
     }, [access_token])
 
-    useEffect(() => {
-        (async () => {
-
-            try {
-                const config = {
-                    headers: {
-                        "Authorization": `Bearer ${access_token}}`, "Content-type": "application/json"
-                    },
-                };
-                const { data } = await axios.post('https://artsec-service-cjfd8.ondigitalocean.app/api/v1/get_wallet_balance', { user_id: user.id.toString() }, config);
-                console.log(data);
-            } catch (err) {
-                toast.error(err.message, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            }
-
-        })();
-    }, [access_token, user.id])
 
     console.log(products);
 
