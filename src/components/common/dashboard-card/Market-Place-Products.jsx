@@ -52,7 +52,7 @@ const MarketPlaceProduct = () => {
                     {
                         products.map((item, index) => (
                             <div key={index} className="bg-white shadow">
-                                <img src="" alt="" className="w-full h-48" />
+                                <img src="" alt="img path not working" className="w-full h-48" />
                                 <div className="p-2">
                                     <div className="flex justify-between items-center">
                                         <div>
