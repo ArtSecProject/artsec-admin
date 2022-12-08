@@ -1,5 +1,4 @@
 
-
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -10,10 +9,12 @@ import { DataLoader } from "..";
 import { icons } from "../../../constant/icon";
 
 
+
 const MarketPlaceProduct = () => {
     const { access_token, user } = useSelector(state => state.auth);
-    const [isLoading, setIsLoading] = useState(false);
-    const [products, setProducts] = useState([]);
+    const [ isLoading, setIsLoading ] = useState(false);
+    const [ products, setProducts ] = useState([]);
+    
     useEffect(() => {
 
         setIsLoading(true);
