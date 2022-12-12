@@ -8,7 +8,7 @@ import { useStateContext } from '../../../contexts/ContextProvider';
 
 
 const Sidebar = ({ children }) => {
-    const [open, setOpen] = useState(true);
+    const [open ] = useState(true);
 
     const { activeMenu, setActiveMenu, screenSize, } = useStateContext();
 

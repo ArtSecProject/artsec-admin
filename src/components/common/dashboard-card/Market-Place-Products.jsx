@@ -7,11 +7,12 @@ import { toast } from "react-toastify";
 import { MartketButton } from ".";
 import { DataLoader } from "..";
 import { icons } from "../../../constant/icon";
+import { app } from "../../../config/app";
 
-
+const baseUrl = app.apiBaseUrl;
 
 const MarketPlaceProduct = () => {
-    const { access_token, user } = useSelector(state => state.auth);
+    const { access_token } = useSelector(state => state.auth);
     const [ isLoading, setIsLoading ] = useState(false);
     const [ products, setProducts ] = useState([]);
     
@@ -30,7 +31,7 @@ const MarketPlaceProduct = () => {
                         "Authorization": `Bearer ${access_token}}`, "Content-type": "application/json"
                     },
                 };
-                const { data } = await axios.get(`${process.env.REACT_APP_URL}/get_products`, config);
+                const { data } = await axios.get(`${baseUrl}/get_products`, config);
                 setProducts(data.data.data);
 
             } catch (err) {
@@ -52,7 +53,7 @@ const MarketPlaceProduct = () => {
                     {
                         products.map((item, index) => (
                             <div key={index} className="bg-white shadow">
-                                <img src="" alt="img path not working" className="w-full h-48" />
+                                <img src="" alt="img endpoint path not working" className="w-full h-48" />
                                 <div className="p-2">
                                     <div className="flex justify-between items-center">
                                         <div>

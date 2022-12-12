@@ -1,5 +1,5 @@
 import { connect } from "formik";
-import { publicRequest, userRequest } from "./api.config"
+import { publicRequest } from "./api.config"
 
 
 export const publicEnpoints = {

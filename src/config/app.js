@@ -1,6 +1,6 @@
 
 export const app = {
-    apiBaseUrl: process.env.REACT_APP_API_URL,
+    apiBaseUrl: process.env.REACT_APP_URL,
     company: {
         name: 'ARTSEC CO',
         url: 'artsec.co',

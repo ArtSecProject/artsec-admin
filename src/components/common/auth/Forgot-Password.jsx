@@ -1,7 +1,7 @@
 
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FORGET_PASSWORD_SCHEMA } from '../../../config/schema';
 import { Div } from '../../../style-component';
