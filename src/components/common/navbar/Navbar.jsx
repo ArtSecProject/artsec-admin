@@ -11,6 +11,7 @@ import { logout } from '../../../redux/auth.slice';
 
 
 const NavButton = ({ customFunc, icon, color, dotColor }) => (
+  // navbar button
   <>
     <button
       type="button"
@@ -41,7 +42,7 @@ const Navbar = () => {
     handleResize();
 
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  },[]);
 
   useEffect(() => {
     if (screenSize <= 900) {
