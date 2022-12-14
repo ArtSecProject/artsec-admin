@@ -1,7 +1,5 @@
-import Logo1 from './img/favicon.png';
-import Logo2 from "./img/logo2.png";
+
 import UploadIcon from './img/Label.png';
-import BgLogo from './img/background-logo.png';
 import UserImg from "./img/user-img.png";
 
 // PORTFOLIO
@@ -20,10 +18,8 @@ import CardType from "./img/card_type.png";
 import ChartFrame from "./img/ChartFrame.png";
 
 export {
-    Logo1,
-    Logo2,
+
     UploadIcon,
-    BgLogo,
     UserImg,
     Eye,
     MarketItem1,
