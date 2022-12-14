@@ -27,7 +27,7 @@ const MarketPlaceProduct = () => {
             try {
                 const config = {
                     headers: {
-                        "Authorization": `Bearer ${access_token}}`, "Content-type": "application/json"
+                        "Authorization": `Bearer ${access_token}`, "Content-type": "application/json"
                     },
                 };
                 const { data } = await axios.get(`${process.env.REACT_APP_URL}/get_products`, config);
@@ -52,7 +52,7 @@ const MarketPlaceProduct = () => {
                     {
                         products.map((item, index) => (
                             <div key={index} className="bg-white shadow">
-                                <img src="" alt="" className="w-full h-48" />
+                                <img src={} alt="" className="w-full h-48" />
                                 <div className="p-2">
                                     <div className="flex justify-between items-center">
                                         <div>
