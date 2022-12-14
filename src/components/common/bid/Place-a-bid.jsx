@@ -138,7 +138,7 @@ const PlaceABid = ({ product }) => {
             </div>
             <div onClick={placeBid}>
               <DashboardButton
-                icon={<icons.ArtSecPlaceBid className="mr-3" />}
+                icon={isLoading ? "sending..." : <icons.ArtSecPlaceBid className="mr-3" />}
                 title="Submit Bit"
                 type="submit"
                 className="app-btn flex justify-center items-center text-center space-x-2 text-white cursor-pointer p-3 rounded-md mt-10"

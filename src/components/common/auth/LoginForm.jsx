@@ -1,5 +1,4 @@
 
-import axios from 'axios';
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,7 +15,7 @@ const LoginForm = () => {
     let navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { error, user, loading } = useSelector(state => state.auth);
+    const { error, loading } = useSelector(state => state.auth);
     const [passwordShown, setPasswordShown] = useState(false);
 
     const togglePassword = () => {

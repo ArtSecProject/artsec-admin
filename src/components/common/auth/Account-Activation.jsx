@@ -4,10 +4,10 @@
 
 
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Div } from '../../../style-component';
 import { icons } from '../../../constant/icon';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { publicEnpoints } from '../../../config/api.request';
 
 

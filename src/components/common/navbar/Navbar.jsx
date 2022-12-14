@@ -5,12 +5,13 @@ import { BsChevronDown } from 'react-icons/bs';
 import { UserImg } from '../../../assets/import';
 import { useStateContext } from '../../../contexts/ContextProvider';
 import { user_profile } from '../../../data/MenuItem';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../../redux/auth.slice';
 
 
 const NavButton = ({ customFunc, icon, color, dotColor }) => (
+  // navbar button
   <>
     <button
       type="button"
@@ -41,7 +42,7 @@ const Navbar = () => {
     handleResize();
 
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  },);
 
   useEffect(() => {
     if (screenSize <= 900) {
@@ -49,7 +50,7 @@ const Navbar = () => {
     } else {
       setActiveMenu(true);
     }
-  }, [screenSize]);
+  },);
 
   const dispatch = useDispatch();
 
