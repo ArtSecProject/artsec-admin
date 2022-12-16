@@ -14,16 +14,16 @@ const baseUrl = app.apiBaseUrl;
 const imgUrl = app.imgBaseUrl;
 
 const MarketPlaceProduct = () => {
-    const { access_token , user} = useSelector(state => state.auth);
+    const { access_token, user } = useSelector(state => state.auth);
     const [isLoading, setIsLoading] = useState(false);
     const [products, setProducts] = useState([]);
-    const [ like, setUnlike ] = useState(false);
+    const [like, setUnlike] = useState(false);
 
 
-const handlePLike = (e) => {
-    e.preventDefault();
-    setUnlike(!like);
-}
+    const handlePLike = (e) => {
+        e.preventDefault();
+        setUnlike(!like);
+    }
 
     useEffect(() => {
 
@@ -60,7 +60,7 @@ const handlePLike = (e) => {
             {isLoading ? <DataLoader /> :
                 <>
                     {
-                        products.map((item, index) => (
+                       products.map((item, index) => (
                             <div key={index} className="bg-white shadow">
                                 <img src={imgUrl + item.img} alt="No ProductImage" className="w-full h-48" />
 
@@ -95,13 +95,14 @@ const handlePLike = (e) => {
                                                 icon={<icons.ArtSecPlaceBid className='mr-2' />}
                                             />
                                         </Link>
-                                        {/* <div onClick={()=> handleLike(item.id , user , access_token , baseUrl)}>
-                                            {<icons.ArtSecFavourite color="orange" />}
-                                        </div> */}
+                                        <div onClick={() => handleLike(item.id, user, access_token, baseUrl, setProducts, products)}>
 
-                                        <div onClick={(e)=> handlePLike(e)}>
-                                            {like ? (<icons.ArtSecFavourite color="red" />) : (<icons.ArtSecFavourite color="orange" />)}
+                                            {item.favourite ? <icons.ArtSecFavourite color="red" /> : <icons.ArtSecFavourite color="orange" />}
                                         </div>
+
+                                        {/* <div onClick={(e)=> handlePLike(e)}>
+                                            {like ? (<icons.ArtSecFavourite color="red" />) : (<icons.ArtSecFavourite color="orange" />)}
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>

@@ -11,6 +11,7 @@ import { icons } from '../../../constant/icon';
 import { useSelector } from 'react-redux';
 import { userRequest } from '../../../config/api.config';
 import { toast } from 'react-toastify';
+import BidSuccess from './Bid-Success';
 // import BidSuccess from './Bid-Success';
 
 const PlaceABid = ({ product }) => {
@@ -19,7 +20,10 @@ const PlaceABid = ({ product }) => {
   const { user } = useSelector(state => state.auth);
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState("");
-  const [expDate , setExpDate] = useState("");
+  const [expDate, setExpDate] = useState("");
+  const [bidSuccess, setBidSuccess] = useState(false);
+
+
   useEffect(() => {
     setInterval(() => setDate(new Date()), 30000);
   }, []);
@@ -57,6 +61,7 @@ const PlaceABid = ({ product }) => {
     try {
       const { data } = await userRequest.post('/v1/add_bid', payload);
       setIsLoading(false);
+      setBidSuccess(true);
       console.log(data);
     } catch (err) {
       toast.error(err.message, {
@@ -124,7 +129,7 @@ const PlaceABid = ({ product }) => {
               </div>
               <div className='flex space-x-2 items-center'>
                 <p className='border border-gray-300 p-3 rounded-lg text-[15px] font-semibold text-center w-full' >
-                  <input type="date" name='exp_date' value={expDate}  onChange={(e) => setExpDate(e.target.value)}/>
+                  <input type="date" name='exp_date' value={expDate} onChange={(e) => setExpDate(e.target.value)} />
                 </p>
               </div>
               <ArtSecCheckBox type="checkbox" label="Includes Insurance" />
@@ -132,7 +137,7 @@ const PlaceABid = ({ product }) => {
             <div onClick={placeBid}>
               <DashboardButton
                 icon={<icons.ArtSecPlaceBid className="mr-3" />}
-                title={isLoading ? "sending..." : "Submit Bit" }
+                title={isLoading ? "sending..." : "Submit Bit"}
                 type="submit"
                 className="app-btn flex justify-center items-center text-center space-x-2 text-white cursor-pointer p-3 rounded-md mt-10"
               />
@@ -144,7 +149,7 @@ const PlaceABid = ({ product }) => {
         </div>
 
         {/* this modal should display on button success submit */}
-        {/* <BidSuccess label={`Your bid has been submitted..`} /> */}
+        {bidSuccess && < BidSuccess label={`Your bid has been submitted..`} />}
       </>
     </ArtSecModal>
   )
