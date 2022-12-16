@@ -11,6 +11,8 @@ import { ToastContainer } from "react-toastify";
 
 
 const RouteGuard = ({ access_token, redirectPath = '/' }) => {
+
+  console.log(access_token);
   const dispatch = useDispatch();
   const currentDate = new Date();
   if (!access_token) {
@@ -18,9 +20,12 @@ const RouteGuard = ({ access_token, redirectPath = '/' }) => {
   }
   const decoded_token = jwt_decode(access_token);
 
-  console.log(decoded_token);
+
+  
+  console.log(new Date(decoded_token.exp * 1000));
 
   if (decoded_token.exp * 1000 < currentDate.getTime()) {
+   
     dispatch(logout());
   }
 
@@ -30,6 +35,7 @@ const RouteGuard = ({ access_token, redirectPath = '/' }) => {
 
 function App() {
   const { access_token } = useSelector(state => state.auth);
+
 
   return (
     <div>

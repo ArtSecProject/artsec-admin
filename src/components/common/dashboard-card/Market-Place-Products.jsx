@@ -8,14 +8,17 @@ import { MartketButton } from ".";
 import { DataLoader } from "..";
 import { icons } from "../../../constant/icon";
 import { app } from "../../../config/app";
+import { handleLike } from "../../../config/api.request";
 
 const baseUrl = app.apiBaseUrl;
 const imgUrl = app.imgBaseUrl;
 
 const MarketPlaceProduct = () => {
-    const { access_token } = useSelector(state => state.auth);
+    const { access_token , user} = useSelector(state => state.auth);
     const [isLoading, setIsLoading] = useState(false);
     const [products, setProducts] = useState([]);
+
+
 
     useEffect(() => {
 
@@ -54,7 +57,7 @@ const MarketPlaceProduct = () => {
                     {
                         products.map((item, index) => (
                             <div key={index} className="bg-white shadow">
-                                <img src={imgUrl + item.img} alt="No ProductImage" className="w-full h-48" />
+                                <img src='' alt="No ProductImage" className="w-full h-48" />
 
                                 <div className="p-2">
                                     <div className="flex justify-between items-center">
@@ -87,8 +90,8 @@ const MarketPlaceProduct = () => {
                                                 icon={<icons.ArtSecPlaceBid className='mr-2' />}
                                             />
                                         </Link>
-                                        <div>
-                                            {<icons.ArtSecFavourite />}
+                                        <div onClick={()=> handleLike(item.id , user , access_token , baseUrl)}>
+                                            {<icons.ArtSecFavourite color="orange" />}
                                         </div>
                                     </div>
                                 </div>

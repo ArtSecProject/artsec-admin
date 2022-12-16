@@ -10,6 +10,7 @@ const AddMoney = () => {
   const [paymentType, setPaymentType] = useState(false);
 
   const handleCardType = (e) => {
+    e.preventDefault();
     setPaymentType(!paymentType);
   }
 
