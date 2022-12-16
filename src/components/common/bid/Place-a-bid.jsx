@@ -19,6 +19,7 @@ const PlaceABid = ({ product }) => {
   const { user } = useSelector(state => state.auth);
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState("");
+  const [expDate , setExpDate] = useState("");
   useEffect(() => {
     setInterval(() => setDate(new Date()), 30000);
   }, []);
@@ -32,12 +33,12 @@ const PlaceABid = ({ product }) => {
     if (amount === '') {
       toast.warn('Amount field is required', {
         position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+      });
+      return;
+    }
+    if (expDate === '') {
+      toast.warn('Amount field is required', {
+        position: "top-right",
       });
       return;
     }
@@ -46,7 +47,7 @@ const PlaceABid = ({ product }) => {
       product_id: product.id.toString(),
       user_id: user.id.toString(),
       share: product.available_shares,
-      expiry_date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDay() + 1}`,
+      expiry_date: expDate,
       status: "BID",
       amount: amount
     }
@@ -123,15 +124,7 @@ const PlaceABid = ({ product }) => {
               </div>
               <div className='flex space-x-2 items-center'>
                 <p className='border border-gray-300 p-3 rounded-lg text-[15px] font-semibold text-center w-full' >
-                  {date.toLocaleDateString('en', {
-                    day: 'numeric',
-                    month: 'short',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    second: 'numeric',
-                    hour12: true,
-                    year: 'numeric',
-                  })}
+                  <input type="date" name='exp_date' value={expDate}  onChange={(e) => setExpDate(e.target.value)}/>
                 </p>
               </div>
               <ArtSecCheckBox type="checkbox" label="Includes Insurance" />
