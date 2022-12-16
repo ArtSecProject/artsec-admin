@@ -17,8 +17,13 @@ const MarketPlaceProduct = () => {
     const { access_token , user} = useSelector(state => state.auth);
     const [isLoading, setIsLoading] = useState(false);
     const [products, setProducts] = useState([]);
+    const [ like, setUnlike ] = useState(false);
 
 
+const handlePLike = (e) => {
+    e.preventDefault();
+    setUnlike(!like);
+}
 
     useEffect(() => {
 
@@ -90,8 +95,12 @@ const MarketPlaceProduct = () => {
                                                 icon={<icons.ArtSecPlaceBid className='mr-2' />}
                                             />
                                         </Link>
-                                        <div onClick={()=> handleLike(item.id , user , access_token , baseUrl)}>
+                                        {/* <div onClick={()=> handleLike(item.id , user , access_token , baseUrl)}>
                                             {<icons.ArtSecFavourite color="orange" />}
+                                        </div> */}
+
+                                        <div onClick={(e)=> handlePLike(e)}>
+                                            {like ? (<icons.ArtSecFavourite color="red" />) : (<icons.ArtSecFavourite color="orange" />)}
                                         </div>
                                     </div>
                                 </div>
