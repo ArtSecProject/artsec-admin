@@ -1,6 +1,6 @@
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Favourite1 } from '../../../assets/import';
 import { data } from '../../../data/place-bid';
 import { DashboardButton } from '../button';
@@ -9,16 +9,71 @@ import { ArtSecConfirmInput } from '../select-input';
 import ArtSectAmtInput from "../select-input/Amount-Input";
 import ArtSecCheckBox from "../select-input/CheckBox";
 import { icons } from '../../../constant/icon';
-// import BidSuccess from './Bid-Success';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import BidSuccess from './Bid-Success';
+import { userRequest } from '../../../config/api.config';
 
 
-const BuyInSplit = () => {
+const BuyInSplit = ({ product }) => {
+
+  const { user } = useSelector(state => state.auth);
+  const [isLoading, setIsLoading] = useState(false);
+  const [amount, setAmount] = useState("");
+  const [share, setShare] = useState("");
+  const [expDate, setExpDate] = useState("");
+  const [bidSuccess, setBidSuccess] = useState(false);
 
 
-  const [date, setDate] = useState(new Date());
-  useEffect(() => {
-    setInterval(() => setDate(new Date()), 30000);
-  }, []);
+
+  const placeBid = async () => {
+    setIsLoading(true);
+
+    if (amount === '') {
+      toast.warn('Amount field is required', {
+        position: "top-right",
+      });
+      return;
+    }
+
+    if (share === '') {
+      toast.warn('Unit field is required', {
+        position: "top-right",
+      });
+      return;
+    }
+
+    if (expDate === '') {
+      toast.warn('Date field is required', {
+        position: "top-right",
+      });
+      return;
+    }
+
+    const payload = {
+      product_id: product.id.toString(),
+      user_id: user.id.toString(),
+      share: share,
+      expiry_date: expDate,
+      status: "SPLIT",
+      amount: amount
+    }
+
+    console.log(payload);
+
+    try {
+      const { data } = await userRequest.post('/v1/add_bid', payload);
+      setIsLoading(false);
+      setBidSuccess(true);
+      console.log(data);
+    } catch (err) {
+      toast.error(err.message, {
+        position: "top-right",
+      });
+      setIsLoading(false);
+    }
+
+  }
 
   return (
     <ArtSecModal width='w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2' title="Buy in Split">
@@ -58,13 +113,15 @@ const BuyInSplit = () => {
                   <p className='app-text'>No. of Unit</p>
                   <ArtSecConfirmInput
                     type="text"
-                    name="unit"
+                    name="share"
                     placeholder="0.00"
                     width='w-full'
                     border="border-2 border-gray-300"
                     radius="rounded-lg" 
                     pad="p-3"
                     textAlign="text-left"
+                    value={share}
+                    onChange={(e) => setShare(e.target.value)}
                   />
                 </label>
                 <label htmlFor="" className="text-lg">
@@ -73,6 +130,8 @@ const BuyInSplit = () => {
                     type="text"
                     name="amount"
                     placeholder="0.00"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
                   />
                 </label>
               </div>
@@ -85,32 +144,33 @@ const BuyInSplit = () => {
                 <p className='app-text'>Offer Expiration</p>
               </div>
               <div className='flex space-x-2 items-center'>
-                <p className='border border-gray-300 p-3 rounded-lg text-[15px] font-semibold text-center w-full' >
-                  {date.toLocaleDateString('en', {
-                    day: 'numeric',
-                    month: 'short',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    second: 'numeric',
-                    hour12: true,
-                    year: 'numeric',
-                  })}
+              <p className='border border-gray-300 p-3 rounded-lg text-[15px] font-semibold  w-full' >
+                  <input type="date" name='expiry_date' value={expDate} onChange={(e) => setExpDate(e.target.value)} required className='w-full' />
                 </p>
               </div>
               <ArtSecCheckBox type="checkbox" label="Includes Insurance" />
             </div>
 
-            <DashboardButton
-              icon={<icons.ArtSecPlaceBid className="mr-3" />}
-              title="Submit Splits"
-              type="submit"
-              className="app-btn flex justify-center items-center text-center space-x-2 text-white cursor-pointer p-3 rounded-md mt-10"
-            />
+            <div onClick={placeBid}>
+              {isLoading ?
+                <DashboardButton
+                  title="Spliting Bid..."
+                  disabled
+                  className="app-btn flex justify-center items-center text-center space-x-2 text-white cursor-pointer p-3 rounded-md mt-10"
+                /> :
+                <DashboardButton
+                  icon={<icons.ArtSecPlaceBid className="mr-3" />}
+                  title="Split Bid"
+                  type="submit"
+                  className="app-btn flex justify-center items-center text-center space-x-2 text-white cursor-pointer p-3 rounded-md mt-10"
+                />}
+            </div>
           </div>
         </div>
 
         {/* this modal should display on button success submit */}
         {/* <BidSuccess label={`You’ve made an offer to buy 2 units of this artwork`} /> */}
+        {bidSuccess && < BidSuccess label={`You’ve made an offer to buy ${share} units of this artwork`} />}
       </>
     </ArtSecModal>
   )

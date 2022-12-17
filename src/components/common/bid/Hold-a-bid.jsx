@@ -1,21 +1,69 @@
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Favourite1 } from '../../../assets/import';
 import { data } from '../../../data/place-bid';
 import { DashboardButton } from '../button';
 import ArtSecModal from "../modal/Modal";
 import ArtSectAmtInput from "../select-input/Amount-Input";
 import { icons } from '../../../constant/icon';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import BidSuccess from './Bid-Success';
+import { userRequest } from '../../../config/api.config';
 // import BidSuccess from './Bid-Success';
 
 
-const HoldABid = () => {
+const HoldABid = ({ product }) => {
+  const { user } = useSelector(state => state.auth);
+  const [isLoading, setIsLoading] = useState(false);
+  const [amount, setAmount] = useState("");
+  const [expDate, setExpDate] = useState("");
+  const [bidSuccess, setBidSuccess] = useState(false);
 
-  const [date, setDate] = useState(new Date());
-  useEffect(() => {
-    setInterval(() => setDate(new Date()), 30000);
-  }, []);
+
+
+  const holdBid = async () => {
+    setIsLoading(true);
+
+    if (amount === '') {
+      toast.warn('Amount field is required', {
+        position: "top-right",
+      });
+      return;
+    }
+    if (expDate === '') {
+      toast.warn('Date field is required', {
+        position: "top-right",
+      });
+      return;
+    }
+
+    const payload = {
+      product_id: product.id.toString(),
+      user_id: user.id.toString(),
+      share: product.available_shares,
+      expiry_date: expDate,
+      status: "HOLD",
+      amount: amount
+    }
+
+    console.log(payload);
+
+    try {
+      const { data } = await userRequest.post('/v1/add_bid', payload);
+      setIsLoading(false);
+      setBidSuccess(true);
+      console.log(data);
+    } catch (err) {
+      toast.error(err.message, {
+        position: "top-right",
+      });
+      setIsLoading(false);
+    }
+
+  }
+
 
   return (
     <ArtSecModal width='w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2' title="Hold a Bid">
@@ -56,6 +104,7 @@ const HoldABid = () => {
                 type="text"
                 name="amount"
                 placeholder="0.00"
+                onChange={(e) => setAmount(e.target.value)}
               />
               <p className='flex justify-end items-end text-[18px] font-normal app-text py-2'>$ 760.03 Wallet Balance</p>
             </div>
@@ -66,32 +115,33 @@ const HoldABid = () => {
                 <p className='app-text'>Hold this artwork until</p>
               </div>
               <div className='flex space-x-2 items-center'>
-                <p className='border border-gray-300 p-3 rounded-lg text-[15px] font-semibold text-center w-full' >
-                  {date.toLocaleDateString('en', {
-                    day: 'numeric',
-                    month: 'short',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    second: 'numeric',
-                    hour12: true,
-                    year: 'numeric',
-                  })}
+              <p className='border border-gray-300 p-3 rounded-lg text-[15px] font-semibold  w-full' >
+                  <input type="date" name='exp_date' value={expDate} onChange={(e) => setExpDate(e.target.value)} />
                 </p>
               </div>
             </div>
 
-            <DashboardButton
-              icon={<icons.ArtSecHoldBid className="mr-3" />}
-              title="Submit Hold"
-              type="submit"
-              className="app-btn flex justify-center items-center text-center space-x-2 text-white cursor-pointer p-3 rounded-md mt-10"
-            />
+            <div onClick={holdBid}>
+              {isLoading ?
+                <DashboardButton
+                  title="Holding Bid..."
+                  disabled
+                  className="app-btn flex justify-center items-center text-center space-x-2 text-white cursor-pointer p-3 rounded-md mt-10"
+                /> :
+                <DashboardButton
+                  icon={<icons.ArtSecPlaceBid className="mr-3" />}
+                  title="Hold Bid"
+                  type="submit"
+                  className="app-btn flex justify-center items-center text-center space-x-2 text-white cursor-pointer p-3 rounded-md mt-10"
+                />}
+            </div>
 
           </div>
         </div>
         
-         {/* this modal should display on button success submit */}
-        {/* <BidSuccess label={`You’ve made an offer to hold this artwork. This hold will be valid until 10th Oct. 2022 at 4pm.`} /> */}
+
+        {/* this modal should display on button success submit */}
+        {bidSuccess && < BidSuccess label={`You’ve made an offer to hold this artwork. This hold will be valid until ${expDate}`} />}
       </>
     </ArtSecModal>
   )

@@ -1,6 +1,6 @@
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Favourite1 } from '../../../assets/import';
 import { data } from '../../../data/place-bid';
 import { DashboardButton } from '../button';
@@ -16,18 +16,11 @@ import BidSuccess from './Bid-Success';
 
 const PlaceABid = ({ product }) => {
 
-  const [date, setDate] = useState(new Date());
   const { user } = useSelector(state => state.auth);
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState("");
   const [expDate, setExpDate] = useState("");
   const [bidSuccess, setBidSuccess] = useState(false);
-
-
-  useEffect(() => {
-    setInterval(() => setDate(new Date()), 30000);
-  }, []);
-
 
 
 
@@ -66,12 +59,6 @@ const PlaceABid = ({ product }) => {
     } catch (err) {
       toast.error(err.message, {
         position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
       });
       setIsLoading(false);
     }
@@ -128,19 +115,25 @@ const PlaceABid = ({ product }) => {
                 <p className='app-text'>Offer Expiration</p>
               </div>
               <div className='flex space-x-2 items-center'>
-                <p className='border border-gray-300 p-3 rounded-lg text-[15px] font-semibold text-center w-full' >
-                  <input type="date" name='exp_date' value={expDate} onChange={(e) => setExpDate(e.target.value)} />
+                <p className='border border-gray-300 p-3 rounded-lg text-[15px] font-semibold  w-full' >
+                  <input type="date" name='expiry_date' value={expDate} onChange={(e) => setExpDate(e.target.value)} className="w-full" />
                 </p>
               </div>
               <ArtSecCheckBox type="checkbox" label="Includes Insurance" />
             </div>
             <div onClick={placeBid}>
-              <DashboardButton
-                icon={<icons.ArtSecPlaceBid className="mr-3" />}
-                title={isLoading ? "sending..." : "Submit Bit"}
-                type="submit"
-                className="app-btn flex justify-center items-center text-center space-x-2 text-white cursor-pointer p-3 rounded-md mt-10"
-              />
+              {isLoading ?
+                <DashboardButton
+                  title="Biding..."
+                  type="submit"
+                  className="app-btn flex justify-center items-center text-center space-x-2 text-white cursor-pointer p-3 rounded-md mt-10"
+                /> :
+                <DashboardButton
+                  icon={<icons.ArtSecPlaceBid className="mr-3" />}
+                  title="Submit Bit"
+                  type="submit"
+                  className="app-btn flex justify-center items-center text-center space-x-2 text-white cursor-pointer p-3 rounded-md mt-10"
+                />}
             </div>
 
 
