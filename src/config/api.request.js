@@ -50,6 +50,7 @@ export const publicEnpoints = {
 }
 
 export const handleLike = async (product_id, user, access_token, baseUrl, setProducts, products) => {
+    console.log(product_id)
     const controller = new AbortController();
     try {
         const config = {
@@ -63,37 +64,35 @@ export const handleLike = async (product_id, user, access_token, baseUrl, setPro
 
         }, config, { signal: controller.signal });
 
-        const likedProduct = products.find(product => product.id == product_id);
-
-        if (data) {
-            if (likedProduct.favourite) {
-                likedProduct.favourite = null;
-                likedProduct.favourite_all.filter(f => f.user_id != user.id)
-            } else {
-                likedProduct.favourite = {
-                    id: data.data.id,
-                    user_id: data.data.product_id,
-                    product_id: data.data.product_id
+        products.map((product, i) => {
+            if (product.id == product_id && data) {
+                if (product.favourite) {
+                    product.favourite = null;
+                    product.favourite_all.filter(f => f.user_id != user.id)
+                } else {
+                    product.favourite = {
+                        id: data.data.id,
+                        user_id: data.data.product_id,
+                        product_id: data.data.product_id
+                    }
+                    product.favourite_all = [...product.favourite_all, product.favourite]
                 }
-                likedProduct.favourite_all = [...likedProduct.favourite_all, likedProduct.favourite]
             }
-
-            const newArr = products.filter(product => product.id != product_id);
-
-            const updatedArr = [...newArr, likedProduct];
+        })
 
 
-            setProducts(updatedArr);
+
+        setProducts([...products]);
 
 
-            controller.abort()
+        controller.abort()
 
-            toast.success(data.message, {
-                position: "top-right",
-            })
-        }
+        toast.success(data.message, {
+            position: "top-right",
+        })
+    }
 
-    } catch (err) {
+    catch (err) {
         toast.error(err.message, {
             position: "top-right",
         });
