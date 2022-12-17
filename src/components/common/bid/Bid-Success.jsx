@@ -15,7 +15,7 @@ const BidSuccess = ({ label }) => {
             </center>
             
             <div className='justify-center items-center text-center'>
-                <Link to="#">
+                <Link to="/dashboard/user-account/investment-history">
                     <DashboardButton
                         title="See Details"
                         className="w-full p-3 app-btn rounded-md text-lg font-bold text-white mb-3"

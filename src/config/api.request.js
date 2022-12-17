@@ -63,12 +63,12 @@ export const handleLike = async (product_id, user, access_token, baseUrl, setPro
 
         }, config, { signal: controller.signal });
 
-        const likedProduct = products.find(product => product.id == product_id);
+        const likedProduct = products.find(product => product.id === product_id);
 
         if (data) {
             if (likedProduct.favourite) {
                 likedProduct.favourite = null;
-                likedProduct.favourite_all.filter(f => f.user_id != user.id)
+                likedProduct.favourite_all.filter(f => f.user_id !== user.id)
             } else {
                 likedProduct.favourite = {
                     id: data.data.id,
@@ -78,7 +78,7 @@ export const handleLike = async (product_id, user, access_token, baseUrl, setPro
                 likedProduct.favourite_all = [...likedProduct.favourite_all, likedProduct.favourite]
             }
 
-            const newArr = products.filter(product => product.id != product_id);
+            const newArr = products.filter(product => product.id !== product_id);
 
             const updatedArr = [...newArr, likedProduct];
 
