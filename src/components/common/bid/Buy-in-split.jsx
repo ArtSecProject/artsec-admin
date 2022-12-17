@@ -20,7 +20,7 @@ const BuyInSplit = ({ product }) => {
   const { user } = useSelector(state => state.auth);
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState("");
-  const [shareUnit, setShareUnit] = useState("");
+  const [share, setShare] = useState("");
   const [expDate, setExpDate] = useState("");
   const [bidSuccess, setBidSuccess] = useState(false);
 
@@ -36,7 +36,7 @@ const BuyInSplit = ({ product }) => {
       return;
     }
 
-    if (shareUnit === '') {
+    if (share === '') {
       toast.warn('Unit field is required', {
         position: "top-right",
       });
@@ -53,9 +53,9 @@ const BuyInSplit = ({ product }) => {
     const payload = {
       product_id: product.id.toString(),
       user_id: user.id.toString(),
-      share: shareUnit,
+      share: share,
       expiry_date: expDate,
-      status: "HOLD",
+      status: "SPLIT",
       amount: amount
     }
 
@@ -120,7 +120,7 @@ const BuyInSplit = ({ product }) => {
                     radius="rounded-lg" 
                     pad="p-3"
                     textAlign="text-left"
-                    onChange={(e) => setShareUnit(e.target.value)}
+                    onChange={(e) => setShare(e.target.value)}
                   />
                 </label>
                 <label htmlFor="" className="text-lg">
@@ -143,7 +143,7 @@ const BuyInSplit = ({ product }) => {
               </div>
               <div className='flex space-x-2 items-center'>
               <p className='border border-gray-300 p-3 rounded-lg text-[15px] font-semibold  w-full' >
-                  <input type="date" name='expiry_date' value={expDate} onChange={(e) => setExpDate(e.target.value)} />
+                  <input type="date" name='expiry_date' value={expDate} onChange={(e) => setExpDate(e.target.value)} required />
                 </p>
               </div>
               <ArtSecCheckBox type="checkbox" label="Includes Insurance" />
@@ -168,7 +168,7 @@ const BuyInSplit = ({ product }) => {
 
         {/* this modal should display on button success submit */}
         {/* <BidSuccess label={`You’ve made an offer to buy 2 units of this artwork`} /> */}
-        {bidSuccess && < BidSuccess label={`You’ve made an offer to buy ${shareUnit} units of this artwork`} />}
+        {bidSuccess && < BidSuccess label={`You’ve made an offer to buy ${share} units of this artwork`} />}
       </>
     </ArtSecModal>
   )

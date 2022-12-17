@@ -116,7 +116,7 @@ const PlaceABid = ({ product }) => {
               </div>
               <div className='flex space-x-2 items-center'>
                 <p className='border border-gray-300 p-3 rounded-lg text-[15px] font-semibold  w-full' >
-                  <input type="date" name='exp_date' value={expDate} onChange={(e) => setExpDate(e.target.value)} />
+                  <input type="date" name='expiry_date' value={expDate} onChange={(e) => setExpDate(e.target.value)} className="w-full" />
                 </p>
               </div>
               <ArtSecCheckBox type="checkbox" label="Includes Insurance" />
