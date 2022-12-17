@@ -26,7 +26,7 @@ const BuyInSplit = ({ product }) => {
 
 
 
-  const splitBid = async () => {
+  const placeBid = async () => {
     setIsLoading(true);
 
     if (amount === '') {
@@ -120,6 +120,7 @@ const BuyInSplit = ({ product }) => {
                     radius="rounded-lg" 
                     pad="p-3"
                     textAlign="text-left"
+                    value={share}
                     onChange={(e) => setShare(e.target.value)}
                   />
                 </label>
@@ -129,6 +130,7 @@ const BuyInSplit = ({ product }) => {
                     type="text"
                     name="amount"
                     placeholder="0.00"
+                    value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                   />
                 </label>
@@ -143,13 +145,13 @@ const BuyInSplit = ({ product }) => {
               </div>
               <div className='flex space-x-2 items-center'>
               <p className='border border-gray-300 p-3 rounded-lg text-[15px] font-semibold  w-full' >
-                  <input type="date" name='expiry_date' value={expDate} onChange={(e) => setExpDate(e.target.value)} required />
+                  <input type="date" name='expiry_date' value={expDate} onChange={(e) => setExpDate(e.target.value)} required className='w-full' />
                 </p>
               </div>
               <ArtSecCheckBox type="checkbox" label="Includes Insurance" />
             </div>
 
-            <div onClick={splitBid}>
+            <div onClick={placeBid}>
               {isLoading ?
                 <DashboardButton
                   title="Spliting Bid..."
