@@ -9,9 +9,8 @@ import ArtSectAmtInput from "../select-input/Amount-Input";
 import ArtSecCheckBox from "../select-input/CheckBox";
 import { icons } from '../../../constant/icon';
 import { useSelector } from 'react-redux';
-import { userRequest } from '../../../config/api.config';
-import { toast } from 'react-toastify';
 import BidSuccess from './Bid-Success';
+import { privateEndpoints } from '../../../config/api.request';
 // import BidSuccess from './Bid-Success';
 
 const PlaceABid = ({ product }) => {
@@ -22,48 +21,17 @@ const PlaceABid = ({ product }) => {
   const [expDate, setExpDate] = useState("");
   const [bidSuccess, setBidSuccess] = useState(false);
 
-
-
-  const placeBid = async () => {
-    setIsLoading(true);
-
-    if (amount === '') {
-      toast.warn('Amount field is required', {
-        position: "top-right",
-      });
-      return;
-    }
-    if (expDate === '') {
-      toast.warn('Amount field is required', {
-        position: "top-right",
-      });
-      return;
-    }
-
-    const payload = {
-      product_id: product.id.toString(),
-      user_id: user.id.toString(),
-      share: product.available_shares,
-      expiry_date: expDate,
-      status: "BID",
-      amount: amount
-    }
-
-    console.log(payload);
-
-    try {
-      const { data } = await userRequest.post('/v1/add_bid', payload);
-      setIsLoading(false);
-      setBidSuccess(true);
-      console.log(data);
-    } catch (err) {
-      toast.error(err.message, {
-        position: "top-right",
-      });
-      setIsLoading(false);
-    }
-
+  const payload = {
+    product_id: product.id.toString(),
+    user_id: user.id.toString(),
+    share: product.available_shares,
+    expiry_date: expDate,
+    status : "BID",
+    amount: amount
   }
+
+
+
 
   return (
     <ArtSecModal width='w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2' title="Place a Bid">
@@ -121,7 +89,7 @@ const PlaceABid = ({ product }) => {
               </div>
               <ArtSecCheckBox type="checkbox" label="Includes Insurance" />
             </div>
-            <div onClick={placeBid}>
+            <div onClick={() => privateEndpoints.placeBid(setIsLoading, setBidSuccess , payload)}>
               {isLoading ?
                 <DashboardButton
                   title="Biding..."

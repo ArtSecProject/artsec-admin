@@ -1,6 +1,3 @@
-
-
-
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -39,12 +36,6 @@ const SignUp = () => {
             if (data.err) {
                 toast.error(data.err.message, {
                     position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
                 });
                 setLoading(false);
             } else {

@@ -2,6 +2,11 @@ import axios from "axios";
 import CryptoJS from 'crypto-js'
 import Cookies from 'js-cookie';
 
+// import store from '../store'
+// const state = store.getState();
+
+// const access_token = state.auth.access_token;
+
 
 
 const encrypted_token = Cookies.get('access_token') && CryptoJS.AES.decrypt(Cookies.get('access_token'), process.env.REACT_APP_KEY);

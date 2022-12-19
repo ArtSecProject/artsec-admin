@@ -1,24 +1,18 @@
-
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 import { MartketButton } from ".";
 import { DataLoader } from "..";
 import { icons } from "../../../constant/icon";
 import { app } from "../../../config/app";
-import { handleLike } from "../../../config/api.request";
+import { privateEndpoints } from "../../../config/api.request";
 
-const baseUrl = app.apiBaseUrl;
 const imgUrl = app.imgBaseUrl;
 
 const MarketPlaceProduct = () => {
-    const { access_token, user } = useSelector(state => state.auth);
     const [isLoading, setIsLoading] = useState(false);
     const [products, setProducts] = useState([]);
 
-    
+
     useEffect(() => {
 
         setIsLoading(true);
@@ -26,35 +20,17 @@ const MarketPlaceProduct = () => {
             setIsLoading(false);
         }, 5000);
 
-        (async () => {
-
-            try {
-                const config = {
-                    headers: {
-                        "Authorization": `Bearer ${access_token}`, "Content-type": "application/json"
-                    },
-                };
-                const { data } = await axios.get(`${baseUrl}/get_products`, config);
-                setProducts(data.data.data);
-
-            } catch (err) {
-                toast.error(err.message, {
-                    position: "top-right",
-                });
-            }
-
-        })();
-    }, [access_token])
+        privateEndpoints.fetchProducts(setProducts);
+    }, [])
 
 
-    console.log(products);
 
     return (
         <>
             {isLoading ? <DataLoader /> :
                 <>
                     {
-                       products.map((item, index) => (
+                        products.map((item, index) => (
                             <div key={index} className="bg-white shadow">
                                 <img src={imgUrl + item.img} alt="No ProductImage" className="w-full h-48" />
 
@@ -89,7 +65,7 @@ const MarketPlaceProduct = () => {
                                                 icon={<icons.ArtSecPlaceBid className='mr-2' />}
                                             />
                                         </Link>
-                                        <div onClick={() => handleLike(item.id, user, access_token, baseUrl, setProducts, products)}>
+                                        <div onClick={() => privateEndpoints.handleLike(item.id, setProducts, products)}>
 
                                             {item.favourite ? <icons.ArtSecFavourite color="red" /> : <icons.ArtSecFavourite color="orange" />}
                                         </div>

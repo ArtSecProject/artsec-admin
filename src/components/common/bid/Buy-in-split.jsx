@@ -10,9 +10,8 @@ import ArtSectAmtInput from "../select-input/Amount-Input";
 import ArtSecCheckBox from "../select-input/CheckBox";
 import { icons } from '../../../constant/icon';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 import BidSuccess from './Bid-Success';
-import { userRequest } from '../../../config/api.config';
+import { privateEndpoints } from '../../../config/api.request';
 
 
 const BuyInSplit = ({ product }) => {
@@ -24,60 +23,18 @@ const BuyInSplit = ({ product }) => {
   const [expDate, setExpDate] = useState("");
   const [bidSuccess, setBidSuccess] = useState(false);
 
-
-
-  const placeBid = async () => {
-    setIsLoading(true);
-
-    if (amount === '') {
-      toast.warn('Amount field is required', {
-        position: "top-right",
-      });
-      return;
-    }
-
-    if (share === '') {
-      toast.warn('Unit field is required', {
-        position: "top-right",
-      });
-      return;
-    }
-
-    if (expDate === '') {
-      toast.warn('Date field is required', {
-        position: "top-right",
-      });
-      return;
-    }
-
-    const payload = {
-      product_id: product.id.toString(),
-      user_id: user.id.toString(),
-      share: share,
-      expiry_date: expDate,
-      status: "SPLIT",
-      amount: amount
-    }
-
-    console.log(payload);
-
-    try {
-      const { data } = await userRequest.post('/v1/add_bid', payload);
-      setIsLoading(false);
-      setBidSuccess(true);
-      console.log(data);
-    } catch (err) {
-      toast.error(err.message, {
-        position: "top-right",
-      });
-      setIsLoading(false);
-    }
-
+  const payload = {
+    product_id: product.id.toString(),
+    user_id: user.id.toString(),
+    share: share,
+    expiry_date: expDate,
+    status: "SPLIT",
+    amount: amount
   }
 
   return (
     <ArtSecModal width='w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2' title="Buy in Split">
-      
+
       <>
         {/* left cols */}
         <div className='block sm:block md:block lg:flex xl:flex 2xl:flex space-x-0 lg:space-x-8 px-4 py-6 space-y-8 lg:space-y-0'>
@@ -117,7 +74,7 @@ const BuyInSplit = ({ product }) => {
                     placeholder="0.00"
                     width='w-full'
                     border="border-2 border-gray-300"
-                    radius="rounded-lg" 
+                    radius="rounded-lg"
                     pad="p-3"
                     textAlign="text-left"
                     value={share}
@@ -144,14 +101,14 @@ const BuyInSplit = ({ product }) => {
                 <p className='app-text'>Offer Expiration</p>
               </div>
               <div className='flex space-x-2 items-center'>
-              <p className='border border-gray-300 p-3 rounded-lg text-[15px] font-semibold  w-full' >
+                <p className='border border-gray-300 p-3 rounded-lg text-[15px] font-semibold  w-full' >
                   <input type="date" name='expiry_date' value={expDate} onChange={(e) => setExpDate(e.target.value)} required className='w-full' />
                 </p>
               </div>
               <ArtSecCheckBox type="checkbox" label="Includes Insurance" />
             </div>
 
-            <div onClick={placeBid}>
+            <div onClick={() => privateEndpoints.placeBid(setIsLoading, setBidSuccess, payload)}>
               {isLoading ?
                 <DashboardButton
                   title="Spliting Bid..."

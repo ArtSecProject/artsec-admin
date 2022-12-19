@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import BidSuccess from './Bid-Success';
 import { userRequest } from '../../../config/api.config';
+import { privateEndpoints } from '../../../config/api.request';
 // import BidSuccess from './Bid-Success';
 
 
@@ -23,45 +24,15 @@ const HoldABid = ({ product }) => {
 
 
 
-  const holdBid = async () => {
-    setIsLoading(true);
 
-    if (amount === '') {
-      toast.warn('Amount field is required', {
-        position: "top-right",
-      });
-      return;
-    }
-    if (expDate === '') {
-      toast.warn('Date field is required', {
-        position: "top-right",
-      });
-      return;
-    }
 
-    const payload = {
-      product_id: product.id.toString(),
-      user_id: user.id.toString(),
-      share: product.available_shares,
-      expiry_date: expDate,
-      status: "HOLD",
-      amount: amount
-    }
-
-    console.log(payload);
-
-    try {
-      const { data } = await userRequest.post('/v1/add_bid', payload);
-      setIsLoading(false);
-      setBidSuccess(true);
-      console.log(data);
-    } catch (err) {
-      toast.error(err.message, {
-        position: "top-right",
-      });
-      setIsLoading(false);
-    }
-
+  const payload = {
+    product_id: product.id.toString(),
+    user_id: user.id.toString(),
+    share: product.available_shares,
+    expiry_date: expDate,
+    status: "HOLD",
+    amount: amount
   }
 
 
@@ -115,13 +86,13 @@ const HoldABid = ({ product }) => {
                 <p className='app-text'>Hold this artwork until</p>
               </div>
               <div className='flex space-x-2 items-center'>
-              <p className='border border-gray-300 p-3 rounded-lg text-[15px] font-semibold  w-full' >
+                <p className='border border-gray-300 p-3 rounded-lg text-[15px] font-semibold  w-full' >
                   <input type="date" name='exp_date' value={expDate} onChange={(e) => setExpDate(e.target.value)} />
                 </p>
               </div>
             </div>
 
-            <div onClick={holdBid}>
+            <div onClick={() => privateEndpoints.placeBid(setIsLoading, setBidSuccess, payload)}>
               {isLoading ?
                 <DashboardButton
                   title="Holding Bid..."
@@ -138,7 +109,7 @@ const HoldABid = ({ product }) => {
 
           </div>
         </div>
-        
+
 
         {/* this modal should display on button success submit */}
         {bidSuccess && < BidSuccess label={`You’ve made an offer to hold this artwork. This hold will be valid until ${expDate}`} />}

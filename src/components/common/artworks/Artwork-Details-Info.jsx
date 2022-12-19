@@ -127,8 +127,8 @@ const ArtworkDetailsInfo = ({ details }) => {
             </div>}
 
             {isClicked.place_bid && <PlaceBid product={details} />}
-            {isClicked.buy_in_split && <BuyInSplit />}
-            {isClicked.hold_bid && <HoldBid />}
+            {isClicked.buy_in_split && <BuyInSplit product={details} />}
+            {isClicked.hold_bid && <HoldBid product={details} />}
         </>
     )
 }

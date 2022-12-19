@@ -6,6 +6,7 @@ import { ArtSecSelectInput, ArtWorkDeatilsInfo } from "../../common"
 import { data, social } from '../../../data/artwork-details-data';
 import { useParams } from 'react-router-dom';
 import { userRequest } from '../../../config/api.config';
+import { privateEndpoints } from '../../../config/api.request';
 
 
 
@@ -18,20 +19,7 @@ const ArtworkDetails = () => {
   console.log(id);
 
   useEffect(() => {
-
-    const getProduct = async () => {
-      try {
-        const { data } = await userRequest.post('/v1/get_by_id_product', { id: id });
-
-        setProduct(data.data);
-      } catch (err) {
-
-      }
-    }
-
-    getProduct();
-
-
+    privateEndpoints.getProduct(setProduct, id)
   }, [id])
 
 

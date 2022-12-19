@@ -29,31 +29,19 @@ const LoginForm = () => {
         },
         validationSchema: LOGIN_SCHEMA,
         onSubmit: async (values) => {
-            try{
+            try {
 
                 await dispatch(fetchAuthUser(values)).unwrap();
                 navigate('/dashboard')
 
                 toast.success('Successfully logged in', {
                     position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
                 });
-                
+
             } catch (err) {
                 console.log(err);
                 toast.error(err.message, {
                     position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
                 });
             }
         }
