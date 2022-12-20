@@ -126,7 +126,6 @@ const BuyInSplit = ({ product }) => {
         </div>
 
         {/* this modal should display on button success submit */}
-        {/* <BidSuccess label={`You’ve made an offer to buy 2 units of this artwork`} /> */}
         {bidSuccess && < BidSuccess label={`You’ve made an offer to buy ${share} units of this artwork`} />}
       </>
     </ArtSecModal>
