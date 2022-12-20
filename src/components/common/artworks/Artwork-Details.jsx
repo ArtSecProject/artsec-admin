@@ -5,7 +5,6 @@ import { icons } from "../../../constant/icon";
 import { ArtSecSelectInput, ArtWorkDeatilsInfo } from "../../common"
 import { data, social } from '../../../data/artwork-details-data';
 import { useParams } from 'react-router-dom';
-import { userRequest } from '../../../config/api.config';
 import { privateEndpoints } from '../../../config/api.request';
 
 

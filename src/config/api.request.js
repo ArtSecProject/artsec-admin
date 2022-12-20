@@ -96,10 +96,10 @@ export const privateEndpoints = {
             }, { signal: controller.signal });
 
             products.map((product, i) => {
-                if (product.id == product_id && data) {
+                if (product.id === product_id && data) {
                     if (product.favourite) {
                         product.favourite = null;
-                        product.favourite_all.filter(f => f.user_id != user.id)
+                        product.favourite_all.filter(f => f.user_id !== user.id)
                     } else {
                         product.favourite = {
                             id: data.data.id,

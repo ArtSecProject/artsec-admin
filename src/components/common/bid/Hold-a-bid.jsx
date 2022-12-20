@@ -8,9 +8,7 @@ import ArtSecModal from "../modal/Modal";
 import ArtSectAmtInput from "../select-input/Amount-Input";
 import { icons } from '../../../constant/icon';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 import BidSuccess from './Bid-Success';
-import { userRequest } from '../../../config/api.config';
 import { privateEndpoints } from '../../../config/api.request';
 // import BidSuccess from './Bid-Success';
 
@@ -21,9 +19,6 @@ const HoldABid = ({ product }) => {
   const [amount, setAmount] = useState("");
   const [expDate, setExpDate] = useState("");
   const [bidSuccess, setBidSuccess] = useState(false);
-
-
-
 
 
   const payload = {
@@ -112,7 +107,7 @@ const HoldABid = ({ product }) => {
 
 
         {/* this modal should display on button success submit */}
-        {bidSuccess && < BidSuccess label={`You’ve made an offer to hold this artwork. This hold will be valid until ${expDate}`} />}
+        {bidSuccess && < BidSuccess label={`You’ve made an offer to hold this artwork. This hold will be valid until ${expDate}` } />}
       </>
     </ArtSecModal>
   )

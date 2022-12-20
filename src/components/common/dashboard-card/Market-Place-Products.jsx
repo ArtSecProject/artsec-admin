@@ -16,11 +16,8 @@ const MarketPlaceProduct = () => {
     useEffect(() => {
 
         setIsLoading(true);
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 5000);
-
         privateEndpoints.fetchProducts(setProducts);
+        setIsLoading(false)
     }, [])
 
 
@@ -67,7 +64,7 @@ const MarketPlaceProduct = () => {
                                         </Link>
                                         <div onClick={() => privateEndpoints.handleLike(item.id, setProducts, products)}>
 
-                                            {item.favourite ? <icons.ArtSecFavourite color="red" /> : <icons.ArtSecFavourite color="orange" />}
+                                            {item.favourite ? <icons.ArtSecLike className="cursor-pointer text-[2rem] text-red-700" /> : <icons.ArtSecDislike className="cursor-pointer text-[2rem] text-[#4B006E]" />}
                                         </div>
                                     </div>
                                 </div>

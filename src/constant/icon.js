@@ -73,12 +73,14 @@ import {
   FaHistory as HistoryIcon,
   FaCreditCard as PaymentMethod,
   FaUpload as ArtSecFileUpload,
+  FaHeart as ArtSecLike,
+  FaRegHeart as ArtSecDislike,
 } from "react-icons/fa";
 
 import { CgFileDocument as DocumentIcon } from "react-icons/cg"
 
 import { 
-  FcGoogle as ArtSecGoogle 
+  FcGoogle as ArtSecGoogle,
 } from "react-icons/fc";
 
 
@@ -88,6 +90,8 @@ import { BiTransfer as ArtSecComparison } from "react-icons/bi";
 import { HiOutlineDocumentText as ArtSecCertificate } from "react-icons/hi";
 
 export const icons = {
+  ArtSecLike,
+  ArtSecDislike,
   ArtSecCertificate,
   ArtSecGoogle,
   ArtSecFacebook,

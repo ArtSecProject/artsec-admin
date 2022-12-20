@@ -2,7 +2,7 @@
 
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
-import { AccountActivation, AccountActivationCompleted, AccountVerification, ArtistArtworks, ArtSecForgotPassword, ArtworkDetails, Collections, CreateAccount, DashboardOverview, Favourite, FundWallet, Login, PortfolioPage, TrendPage, UserDocuments, UserInvestmentHistory, UserNotification, UserPaymentMethod, UserProfile, WalletPage } from "./pages";
+import { AccountActivation, AccountActivationCompleted, AccountVerification, ArtistArtworks, ArtSecForgotPassword, ArtworkDetails, Collections, CreateAccount, DashboardOverview, Favourite, FundWallet, Login, NotMatch, PortfolioPage, TrendPage, UserDocuments, UserInvestmentHistory, UserNotification, UserPaymentMethod, UserProfile, WalletPage } from "./pages";
 import 'react-toastify/dist/ReactToastify.css';
 import jwt_decode from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
@@ -72,6 +72,7 @@ function App() {
 
             {/* end of user account page */}
           </Route>
+          <Route path='*' element={<NotMatch />} />
 
         </Routes>
       </Router>
