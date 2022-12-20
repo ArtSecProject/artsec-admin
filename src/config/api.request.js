@@ -66,12 +66,12 @@ export const publicEnpoints = {
 
 export const privateEndpoints = {
 
-    async fetchProducts(setProducts) {
+    async fetchProducts(setProducts, token) {
 
         try {
             const config = {
                 headers: {
-                    "Authorization": `Bearer ${access_token}`, "Content-type": "application/json"
+                    "Authorization": `Bearer ${token}`, "Content-type": "application/json"
                 },
             };
             const { data } = await axios.get(`${baseUrl}/get_products`, config);
@@ -168,7 +168,7 @@ export const privateEndpoints = {
 
     },
 
-    async getProduct(setProduct , id) {
+    async getProduct(setProduct, id) {
         try {
             const { data } = await userRequest.post('/get_by_id_product', { id: id });
 

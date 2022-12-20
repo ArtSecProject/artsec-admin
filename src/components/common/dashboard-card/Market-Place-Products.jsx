@@ -5,12 +5,14 @@ import { DataLoader } from "..";
 import { icons } from "../../../constant/icon";
 import { app } from "../../../config/app";
 import { privateEndpoints } from "../../../config/api.request";
+import { useSelector } from "react-redux";
 
 const imgUrl = app.imgBaseUrl;
 
 const MarketPlaceProduct = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [products, setProducts] = useState([]);
+    const { access_token } = useSelector(state => state.auth)
 
 
     useEffect(() => {
@@ -20,7 +22,7 @@ const MarketPlaceProduct = () => {
             setIsLoading(false);
         }, 5000);
 
-        privateEndpoints.fetchProducts(setProducts);
+        privateEndpoints.fetchProducts(setProducts, access_token);
     }, [])
 
 
